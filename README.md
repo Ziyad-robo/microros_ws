@@ -39,16 +39,23 @@ This project implements a micro-ROS node on an ESP32 that publishes integer mess
 # Install ROS2 Humble (follow official documentation)
 source /opt/ros/humble/setup.bash
 
-# Clone this repository
+# Option A: Clone this repository
 git clone <your-repo-url>
 cd microros_ws
+
+# Option B: Create workspace from scratch
+mkdir -p ~/microros_ws/src
+cd ~/microros_ws
 ```
 
-### 2. Build micro-ROS Agent
+### 2. Install micro-ROS Setup Package
 
 ```bash
 # Source ROS2 environment
 source /opt/ros/humble/setup.bash
+
+# Clone micro-ROS setup package
+git clone -b humble https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
 
 # Update dependencies
 sudo apt update && rosdep update
@@ -57,14 +64,48 @@ rosdep install --from-paths src --ignore-src -y
 # Build micro-ROS tools
 colcon build
 source install/local_setup.bash
+```
 
-# Create and build micro-ROS agent
+### 3. Create micro-ROS Agent Workspace
+
+```bash
+# Create agent workspace (this will clone micro-ROS agent packages into src/uros/)
 ros2 run micro_ros_setup create_agent_ws.sh
+
+# Build the agent
 ros2 run micro_ros_setup build_agent.sh
 source install/local_setup.bash
 ```
 
-### 3. Build and Upload ESP32 Firmware
+**Note:** The `create_agent_ws.sh` script will create the `src/uros/` directory and clone the following packages:
+- `micro_ros_msgs` - Standard micro-ROS message definitions
+- `micro-ROS-Agent` - The micro-ROS agent that bridges micro-ROS clients to ROS2
+
+### 3.1 Create Firmware Project (if starting from scratch)
+
+If you're creating the firmware project from scratch, follow these steps:
+
+```bash
+# Create firmware directory
+mkdir -p src/firmware/src
+
+# Create PlatformIO configuration
+cat > src/firmware/platformio.ini << 'EOF'
+[env:esp32doit-devkit-v1]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+lib_deps = 
+    https://github.com/micro-ROS/micro_ros_platformio
+board_microros_distro = humble
+EOF
+
+# Copy the main.cpp file from the repository or create your own
+# (See src/firmware/src/main.cpp in this repository)
+```
+
+### 4. Build and Upload ESP32 Firmware
 
 ```bash
 cd src/firmware
@@ -80,7 +121,7 @@ pio run
 pio run --target upload
 ```
 
-### 4. Run the System
+### 5. Run the System
 
 **Terminal 1 - Start micro-ROS Agent:**
 ```bash
