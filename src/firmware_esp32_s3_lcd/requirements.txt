@@ -1,0 +1,17 @@
+# Python dependencies for micro-ROS PlatformIO build
+# These packages need to be installed in the PlatformIO environment
+
+# Core dependencies for micro-ROS
+catkin_pkg>=1.0.0
+empy==3.3.4
+lark>=1.2.0
+lark-parser>=0.12.0
+
+# Additional dependencies (may be automatically installed)
+importlib-resources>=6.0.0
+pyyaml>=6.0.0
+markupsafe==2.0.1
+docutils>=0.21.0
+python-dateutil>=2.9.0
+pyparsing>=3.2.0
+six>=1.17.0 
