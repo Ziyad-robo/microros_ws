@@ -1,0 +1,66 @@
+# ROS2 build artifacts
+build/
+install/
+log/
+
+# PlatformIO files
+src/firmware/.pio/
+src/firmware/.pioenvs/
+src/firmware/.piolibdeps/
+src/firmware/pioenvs/
+src/firmware/piolibdeps/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE files
+.vscode/settings.json
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/ipch/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Logs
+*.log
+
+# Compiled binaries
+*.bin
+*.elf
+*.hex
+
+# Firmware build artifacts
+firmware.bin
+firmware.elf
+partitions.bin
+bootloader.bin 
